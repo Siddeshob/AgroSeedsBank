@@ -1,0 +1,1 @@
+export const CARD_IMG='https://blog-images-1.pharmeasy.in/2020/08/03171127/Sunflower-Seeds-Oil.jpg'
