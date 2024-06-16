@@ -1,14 +1,30 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../Header";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = ({onLoginClick}) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const[isLoggedIn, setIsLoggedIn]=useState();
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(username=='123' && password=='123')
+      {
+        setIsLoggedIn(true);
+        
+        navigate('/adminHome')
+      }
+      else
+      {
+        alert("Invalid Credentials");
+      }
+
+
     // try {
     //   const response = await axios.post(
     //     "http://localhost:8080/api/auth/login",
@@ -33,10 +49,12 @@ const Login = () => {
     // }
   };
 
-
-  console.log(username);
-  console.log(password);
+  //console.log(username);
+  //console.log(password);
   return (
+
+    <div>
+      <Header/>
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
@@ -80,10 +98,11 @@ const Login = () => {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        >
-          <Link to={"/admin"}>Submit</Link>
+        >Submit
+          {/* <Link to={"/admin"}>Submit</Link> */}
         </button>
       </form>
+    </div>
     </div>
   );
 };

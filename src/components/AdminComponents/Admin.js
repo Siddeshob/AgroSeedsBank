@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import Card from "../Card";
+import useCardFetch from "../../CustomHooks/useCardFetch";
+import Header from "../Header";
 
-const Admin = () => {
+const Admin = ({}) => {
+
+ 
+
   const [formData, setFormData] = useState({
     imageLink: "",
     itemName: "",
@@ -61,6 +67,8 @@ const Admin = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg space-y-4">
         <label className="block text-gray-500 text-3xl font-bold mb-2">
@@ -142,6 +150,7 @@ const Admin = () => {
           <Link to={"/"}>Create</Link>
         </button>
       </form>
+    </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Login from "./components/Login/Login";
 import PreOrder from "./components/order/PreOrder";
 import Admin from "./components/AdminComponents/Admin";
 import AdminCardForm from "./components/Login/AdminCardForm";
+import AdminHome from "./components/AdminComponents/AdminHome";
 function App() {
   const appRouter = createBrowserRouter([
     {
@@ -19,12 +20,16 @@ function App() {
       element:<PreOrder/>
     },
     {
-      path:"/admin",
+      path:"/adminAddForm",
       element:<Admin/>
     },
     {
       path:'/test',
       element:<AdminCardForm/>
+    },
+    {
+      path:'/adminHome',
+      element:<AdminHome/>
     }
   ]);
   return (
