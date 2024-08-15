@@ -5,17 +5,19 @@ import Card from "./Card";
 import useCardFetch from "../CustomHooks/useCardFetch";
 
 const Body = () => {
-  //state to hold the fetch card data
+  // State to hold the fetched card data
   const [cards, setCards] = useState([]);
 
-  //---> Updating card toggle
+  // Log the fetched cards array
+  console.log("Fetched cards:", cards);
+
+  // Fetch card data using custom hook
+  useCardFetch(setCards);
+
+  // States for toggling features
   const [PUTforEditTogel, setPUTforEditTogel] = useState(false);
   const [showLoginPage, setShowLoginPage] = useState(false);
 
-  //use this hook to fetch card data
-  useCardFetch(setCards);
-
-  
   const handleLoginClick = () => {
     setShowLoginPage(!showLoginPage);
   };
@@ -31,13 +33,11 @@ const Body = () => {
       <div className="flex flex-wrap justify-center">
         {cards.map((card) => (
           <Card
-            key={card.imageLink}
-            card={card}
+            key={card.imageLink} // Ensure that card.id is used as a key
+            card={card}   // Pass the card object as a prop
             onLoginClick={handleLoginClick}
             onEditClick={handleEditClick}
-            PUTforEditTogel={true}
-            
-            
+            PUTforEditTogel={PUTforEditTogel}
           />
         ))}
       </div>

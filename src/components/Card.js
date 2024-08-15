@@ -1,64 +1,64 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
-
-  console.log(onEditClick);
-  console.log(PUTforEditTogel);
-
-  const onEditClickFunToToggle = () => {
-    onEditClick(true);
-  };
-
+  // Initialize state with card data
   const [PUTcardData, setPUTcardData] = useState({
     imageLink: card.imageLink,
     itemName: card.itemName,
     price: card.price,
     villageAddress: card.villageAddress,
-    id:card.id,
+    id: card.id,
   });
 
-  const handlePUTcardFun = async (e) => {
-    if (onEditClick === true) {
-      try {
-        const response = await axios.put(
-          "http://localhost:8080/api/cards",
-          PUTcardData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
 
-        if (response.status === 200) alert("🎉🎉🎉Updated successfully🎉🎉🎉");
-      } catch (e) {
-        alert(e);
-      }
+  // Function to handle edit click
+  const onEditClickFunToToggle = () => {
+    onEditClick(true);
+  };
+
+  // Function to handle card update
+  const handlePUTcardFun = async () => {
+    try {
+      const response = await axios.put(
+        "http://localhost:8080/api/cards",
+        PUTcardData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) alert("🎉 Updated successfully 🎉");
+    } catch (e) {
+      alert(e);
     }
   };
-//-----------------------------------------------------------------------------------------------------------------
-  
-  function funForDeleteCards(id){
-   const handle=async(id)=>{
+
+  // Function to handle card deletion
+  const funForDeleteCards = async (card) => {
+    if (!card || !card.id) {
+      console.error("Invalid card object or card.id is undefined");
+      return;
+    }
+
     try {
-      const response = await fetch(`http://localhost:8080/api/cards/${id}`, {
-          method: 'DELETE',
+      
+      const response = await fetch(`http://localhost:8080/api/cards/${card.id}`, {
+        method: "DELETE",
       });
 
-      if (response.status === 204) {
-         alert("🎉🎉🎉Deleted successfully🎉🎉")
+      if (response.ok) {
+        console.log(`Card with ID ${card.id} deleted successfully`);
       } else {
-          console.error('Failed to delete the item.');
+        console.error("Failed to delete card:", response.statusText);
       }
-  } catch (error) {
-      console.error('Error:', error);
-  }
-
-   }
-    
-  }
+    } catch (e) {
+      console.error("Error occurred while deleting the card:", e);
+    }
+  };
 
   return (
     <div className="max-w-xs bg-cyan-100 p-4 rounded-lg shadow-lg m-6">
@@ -81,9 +81,6 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
         </p>
       </div>
       <div className="flex justify-center mt-4">
-        {/* <Link to="/PreOrder" className="bg-sky-500 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition duration-300">
-          Pre-Order
-        </Link> */}
         {!onLoginClick ? (
           <>
             <button
@@ -92,7 +89,10 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
             >
               <Link to={"/adminAddForm"}>Edit🛠️</Link>
             </button>
-            <button onClick= {  funForDeleteCards(card.id) } className="bg-red-600 text-white px-6 py-2 mx-4 rounded-md hover:bg-sky-700 transition duration-300">
+            <button
+              onClick={() => funForDeleteCards(card)}
+              className="bg-red-600 text-white px-6 py-2 mx-4 rounded-md hover:bg-sky-700 transition duration-300"
+            >
               Delete🗑️
             </button>
           </>

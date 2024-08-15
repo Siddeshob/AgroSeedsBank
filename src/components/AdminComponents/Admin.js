@@ -173,7 +173,7 @@ const Admin = ({}) => {
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
           {/* submit */}
-          <Link to={"/adminAddForm"}>Create</Link>
+          <Link to={"/adminHome"}>Create</Link>
         </button>
       </form>
     </div>
