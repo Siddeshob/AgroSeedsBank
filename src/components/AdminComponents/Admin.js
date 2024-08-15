@@ -18,21 +18,38 @@ const Admin = ({}) => {
 
   //const history=useHistory()
 
-  const changeImageLinkHandler = (e) => {
-    formData.imageLink = e.target.value;
-  };
+  // const changeImageLinkHandler = (e) => {
+  //   const{imageLink,value}= e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [imageLink]:value,
+  //   }
+  //   )
+  // };
 
-  const changeItemNameHandle = (e) => {
-    formData.itemName = e.target;
-  };
+  // const changeItemNameHandle = (e) => {
+  //   const{itemName,value} = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [itemName]:value,
+  //   })
+  // };
 
-  const changePriceHandle = (e) => {
-    formData.price = e.target;
-  };
+  // const changePriceHandle = (e) => {
+  //   const{price,value} = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [price]:value,
+  //   })
+  // };
 
-  const ChangleVillageAddressHandle = (e) => {
-    formData.villageAddress = e.target;
-  };
+  // const ChangleVillageAddressHandle = (e) => {
+  //   const{villageAddress,value} = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [villageAddress]:value,
+  //     })
+  // };
 
 
   const handleChange = (e) => {
@@ -41,25 +58,30 @@ const Admin = ({}) => {
       ...prevFormData,
       [name]: value,
     }));
+    console.log(formData)
   };
 
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData)
     try {
-      const response = await axios.post('http://localhost:8080/api/cards', formData, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      if (response.status === 200) {
-        // If successful, redirect to home page
-       
-      } else {
-        alert('Error in form submission');
+      const response= await fetch('http://localhost:8080/api/cards',
+                      {
+                        method:'POST',
+                        headers:{'Content-Type':'application/json'},
+                        body:JSON.stringify(formData),
+                      }
+                    )
+      const json= await response.json();
+      console.log(json)
+      console.log(response)
+      if(response.status==200)
+      {
+        alert('created')
       }
+
     } catch (error) {
       console.error('Error:', error);
       alert(error);
@@ -82,8 +104,9 @@ const Admin = ({}) => {
             Image Link
           </label>
           <input
+            //onChange={handleChange}
+            value={formData.imageLink}
             onChange={handleChange}
-            // value={formData.imageLink}
             type="text"
             name="imageLink"
             id="img-link"
@@ -99,8 +122,9 @@ const Admin = ({}) => {
             Item Name
           </label>
           <input
+            // onChange={handleChange}
+            value={formData.itemName}
             onChange={handleChange}
-            // value={formData.itemName}
             name="itemName"
             type="text"
             id="item-name"
@@ -116,8 +140,9 @@ const Admin = ({}) => {
             Price
           </label>
           <input
+            //onChange={handleChange}
+            value={formData.price}
             onChange={handleChange}
-            // value={formData.price}
             name="price"
             type="text"
             id="price"
@@ -133,8 +158,9 @@ const Admin = ({}) => {
             Village Address
           </label>
           <input
+            //onChange={handleChange}
+            value={formData.villageAddress}
             onChange={handleChange}
-            // value={formData.villageAddress}
             name="villageAddress"
             type="text"
             id="address"
@@ -147,7 +173,7 @@ const Admin = ({}) => {
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
           {/* submit */}
-          <Link to={"/"}>Create</Link>
+          <Link to={"/adminAddForm"}>Create</Link>
         </button>
       </form>
     </div>

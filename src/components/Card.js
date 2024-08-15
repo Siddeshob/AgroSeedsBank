@@ -16,6 +16,7 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
     itemName: card.itemName,
     price: card.price,
     villageAddress: card.villageAddress,
+    id:card.id,
   });
 
   const handlePUTcardFun = async (e) => {
@@ -37,6 +38,27 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
       }
     }
   };
+//-----------------------------------------------------------------------------------------------------------------
+  
+  function funForDeleteCards(id){
+   const handle=async(id)=>{
+    try {
+      const response = await fetch(`http://localhost:8080/api/cards/${id}`, {
+          method: 'DELETE',
+      });
+
+      if (response.status === 204) {
+         alert("🎉🎉🎉Deleted successfully🎉🎉")
+      } else {
+          console.error('Failed to delete the item.');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
+
+   }
+    
+  }
 
   return (
     <div className="max-w-xs bg-cyan-100 p-4 rounded-lg shadow-lg m-6">
@@ -70,7 +92,7 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
             >
               <Link to={"/adminAddForm"}>Edit🛠️</Link>
             </button>
-            <button className="bg-red-600 text-white px-6 py-2 mx-4 rounded-md hover:bg-sky-700 transition duration-300">
+            <button onClick= {  funForDeleteCards(card.id) } className="bg-red-600 text-white px-6 py-2 mx-4 rounded-md hover:bg-sky-700 transition duration-300">
               Delete🗑️
             </button>
           </>
