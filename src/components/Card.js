@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
+
+const navigate=useNavigate()
+
   // Initialize state with card data
   const [PUTcardData, setPUTcardData] = useState({
     imageLink: card.imageLink,
@@ -60,6 +63,9 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
     }
   };
 
+const handleUpdatez= (id)=> {navigate(`/card/${id}`)}
+
+
   return (
     <div className="max-w-xs bg-cyan-100 p-4 rounded-lg shadow-lg m-6">
       <img
@@ -85,9 +91,10 @@ const Card = ({ card, onLoginClick, onEditClick, PUTforEditTogel }) => {
           <>
             <button
               className="bg-amber-600 text-white px-6 py-2 mx-4 rounded-md hover:bg-sky-700 transition duration-300"
-              onClick={onEditClickFunToToggle}
+              onClick={()=>handleUpdatez(card.id)}
             >
-              <Link to={"/adminAddForm"}>Edit🛠️</Link>
+             <Link to={`/update/${card.id}`}>Edit🛠️</Link>
+
             </button>
             <button
               onClick={() => funForDeleteCards(card)}
