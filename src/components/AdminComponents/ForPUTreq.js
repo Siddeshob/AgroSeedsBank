@@ -26,7 +26,7 @@ const ForPUTreq = () => {
   useEffect(()=>{
     const fetchCards=async()=>{
       try{
-        const response=await fetch(`http://localhost:8080/api/cards/${id}`)
+        const response=await fetch(`${process.env.REACT_APP_API_URL}/api/cards/${id}`)
         const data=await response.json()
         setFormData(data)
 
@@ -41,7 +41,7 @@ const ForPUTreq = () => {
   const handleSubmit=async(e)=>{
     e.preventDefault()
     try{
-        const response=await fetch(`http://localhost:8080/api/cards/${id}`,{
+        const response=await fetch(`${process.env.REACT_APP_API_URL}/api/cards/${id}`,{
             method:'PATCH',
             Headers:{
                 'Content-Type':'application/json',

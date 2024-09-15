@@ -24,8 +24,10 @@ const navigate=useNavigate()
   // Function to handle card update
   const handlePUTcardFun = async () => {
     try {
+      console.log(process.env.REACT_APP_API_URL);
+
       const response = await axios.put(
-        "http://localhost:8080/api/cards",
+        `${process.env.REACT_APP_API_URL}/api/cards`,
         PUTcardData,
         {
           headers: {
@@ -49,11 +51,12 @@ const navigate=useNavigate()
 
     try {
       
-      const response = await fetch(`http://localhost:8080/api/cards/${card.id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/cards/${card.id}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
+        alert("Card deleted successfully,Refresh the page 🔃");
         console.log(`Card with ID ${card.id} deleted successfully`);
       } else {
         console.error("Failed to delete card:", response.statusText);
@@ -86,7 +89,7 @@ const handleUpdatez= (id)=> {navigate(`/card/${id}`)}
           </span>
         </p>
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4"> 
         {!onLoginClick ? (
           <>
             <button
@@ -94,7 +97,7 @@ const handleUpdatez= (id)=> {navigate(`/card/${id}`)}
               onClick={()=>handleUpdatez(card.id)}
             >
              <Link to={`/update/${card.id}`}>Edit🛠️</Link>
-
+   
             </button>
             <button
               onClick={() => funForDeleteCards(card)}
